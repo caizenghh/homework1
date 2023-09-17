@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>注册表</title>
+  </head>
+  <body>
+    <form action="" method="get" name="作业2">
+      <h4>欢迎注册会员</h4>
+      手机号码：<input
+        type="text"
+        placeholder="11位手机号"
+        name="number"
+        maxlength="11"
+      /><span style="color: red"> 必填</span><br />
+      创建密码：<input
+        type="password"
+        placeholder="11位密码"
+        name="cipher"
+        maxlength="8"
+      /><span style="color: red"> 必填</span><br />
+      注册邮箱：<input
+        type="text"
+        placeholder="例如:wustzz@sina.com"
+        name="qq"
+        maxlength="20"
+      /><span style="color: red"> 必填</span><br />
+      <input
+        type="text"
+        value=""
+        placeholder="请输入验证码（区分大小写）"
+        style="height: 43px; position: relative; top: -15px; font-size: 20px"
+        id="text"
+      />
+      <canvas
+        id="canvas"
+        width="100"
+        height="43"
+        onclick="dj()"
+        style="border: 1px solid #ccc; border-radius: 5px"
+      ></canvas>
+      <button class="btn" onclick="sublim()">提交</button>
+      <script>
+        var show_num = [];
+        draw(show_num);
+        function dj() {
+          draw(show_num);
+        }
+        function sublim() {
+          var val = document.getElementById("text").value;
+          var num = show_num.join("");
+          if (val == "") {
+            alert("请输入验证码！");
+          } else if (val == num) {
+            alert("提交成功！");
+            document.getElementById(".input-val").val("");
+            draw(show_num);
+          } else {
+            alert(
+              "验证码错误！\n你输入的是:  " +
+                val +
+                "\n正确的是:  " +
+                num +
+                "\n请重新输入！"
+            );
+            document.getElementById("text").value = "";
+            draw(show_num);
+          }
+        }
+        function draw(show_num) {
+          var canvas_width = document.getElementById("canvas").clientWidth;
+          var canvas_height = document.getElementById("canvas").clientHeight;
+          var canvas = document.getElementById("canvas"); //获取到canvas的对象，演员
+          var context = canvas.getContext("2d"); //获取到canvas画图的环境，演员表演的舞台
+          canvas.width = canvas_width;
+          canvas.height = canvas_height;
+          var sCode =
+            "A,B,C,E,F,G,H,J,K,L,M,N,P,Q,R,S,T,W,X,Y,Z,1,2,3,4,5,6,7,8,9,0,q,w,e,r,t,y,u,i,o,p,a,s,d,f,g,h,j,k,l,z,x,c,v,b,n,m";
+          var aCode = sCode.split(",");
+          var aLength = aCode.length; //获取到数组的长度
+
+          for (var i = 0; i <= 3; i++) {
+            var j = Math.floor(Math.random() * aLength); //获取到随机的索引值
+            var deg = (Math.random() * 30 * Math.PI) / 180; //产生0~30之间的随机弧度
+            var txt = aCode[j]; //得到随机的一个内容
+            show_num[i] = txt;
+            var x = 10 + i * 20; //文字在canvas上的x坐标
+            var y = 20 + Math.random() * 8; //文字在canvas上的y坐标
+            context.font = "bold 23px 微软雅黑";
+
+            context.translate(x, y);
+            context.rotate(deg);
+
+            context.fillStyle = randomColor();
+            context.fillText(txt, 0, 0);
+
+            context.rotate(-deg);
+            context.translate(-x, -y);
+          }
+          for (var i = 0; i <= 5; i++) {
+            //验证码上显示线条
+            context.strokeStyle = randomColor();
+            context.beginPath();
+            context.moveTo(
+              Math.random() * canvas_width,
+              Math.random() * canvas_height
+            );
+            context.lineTo(
+              Math.random() * canvas_width,
+              Math.random() * canvas_height
+            );
+            context.stroke();
+          }
+          for (var i = 0; i <= 30; i++) {
+            //验证码上显示小点
+            context.strokeStyle = randomColor();
+            context.beginPath();
+            var x = Math.random() * canvas_width;
+            var y = Math.random() * canvas_height;
+            context.moveTo(x, y);
+            context.lineTo(x + 1, y + 1);
+            context.stroke();
+          }
+        }
+        function randomColor() {
+          //得到随机的颜色值
+          var r = Math.floor(Math.random() * 256);
+          var g = Math.floor(Math.random() * 256);
+          var b = Math.floor(Math.random() * 256);
+          return "rgb(" + r + "," + g + "," + b + ")";
+        }
+      </script>
+      <br />
+      性别：男 <input type="radio" name="sex" /> 女<input
+        type="radio"
+        name="sex"
+      /><br />
+      生日：<input type="text" name="birthday" placehoder="年/月/日" /><br />
+      年龄：<input type="text" name="age" /> <br />
+      籍贯：<select name="" id="" value="湖北省">
+        <option>湖北省</option>
+        <option>江西省</option>
+        <option>山东省</option>
+        <option>湖南省</option>
+        <option>黑龙江省</option>
+        <option>广东省</option>
+        <option>陕西省</option>
+        <option>山西省</option>
+        <option>江苏省</option>
+        <option>福建省</option>
+        <option>吉林省</option>
+        <option>宁夏回族自治区</option>
+        <option>广西壮族自治区</option>
+        <option>内蒙古维吾尔族自治区</option>
+        <option>西藏藏族自治区</option>
+        <option>新疆省</option>
+        <option>甘肃省</option>
+        <option>河南省</option>
+        <option>河北省</option>
+        <option>安徽省</option>
+        <option>云南省</option>
+        <option>北京市</option>
+        <option>天津市</option>
+        <option>四川省</option>
+        <option>上海市</option>
+        <option>重庆市</option>
+        <option>浙江省</option>
+        <option>台湾省</option>
+        <option>青海省</option>
+        <option>贵州省</option>
+        <option>辽宁省</option>
+      </select>
+      <select name="" id="" value="武汉省">
+        <option>武汉市</option>
+        <option>孝感市</option>
+      </select>
+      <select name="" id="" value="本科">
+        <option value="">本科</option>
+        <option value="">专科</option></select
+      ><br />
+      月薪：<input
+        type="range"
+        id="ar"
+        name="ar"
+        min="0"
+        max="20000"
+        step="100"
+        value="10000"
+      />
+      <span id="msg"></span><br />
+      个人爱好: 唱歌 <input type="checkbox" name="hobby" /> 足球
+      <input type="checkbox" name="hobby" /> 篮球
+      <input type="checkbox" name="hobby" /> <br />
+      个人照片： <input type="file" /><br />
+      个人简介： <textarea name="简介" id="" cols="30" rows="10"></textarea
+      ><br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="submit" />&nbsp;&nbsp; <input type="reset" />
+    </form>
+  </body>
+  <script>
+    var msg = document.getElementById("msg"); // 根据id值找到span元素
+    window.onload = function () {
+      msg.innerHTML = document.getElementById("ar").value; // 获取区间域初始value值
+    };
+    document.getElementById("ar").onchange = function () {
+      msg.innerHTML = this.value; // 将当前区间域的value作为span元素的内容
+    };
+  </script>
+</html>
